@@ -2,3 +2,5 @@ kaggle
 pandas
 matplotlib
 scikit-learn
+seaborn
+sweetviz

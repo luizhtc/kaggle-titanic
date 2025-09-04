@@ -1,6 +1,7 @@
 import os
 import zipfile
 from pandas import DataFrame
+from typing import List
 
 from kaggle.api.kaggle_api_extended import KaggleApi
 
@@ -39,7 +40,36 @@ def ktic_treat_data_types(df) -> DataFrame:
             else '3rd', axis=1
     )
     df['Age'] = df['Age'].round(0).astype('Int64')
+    df['Survived'] = df['Survived'].round(0).astype('Int64')
 
+    return df
+
+def ktic_get_title(x, list_titles: List[str]) -> str:
+    for title in list_titles:
+        if title in x:
+            return title
+        
+    return "No title."
+
+def ktic_get_title_group(df) -> DataFrame:
+    title_map = {
+        "Capt.": "Millitary",
+        "Col.": "Millitary",
+        "Don.": "Honorary",
+        "Dr.": "Honorary",
+        "Jonkheer.": "Honorary",
+        "Major.": "Millitary",
+        "Master.": "Honorary",
+        "Miss.": "Common",
+        "Mlle.": "Honorary",
+        "Mme.": "Honorary",
+        "Mr.": "Common",
+        "Mrs.": "Common",
+        "Ms.": "Common",
+        "Rev.": "Honorary"
+    }
+
+    df["Title_Group"] = df["Title"].map(title_map)
     return df
 
     
